@@ -8,6 +8,7 @@ import {
   Item,
   Separator,
   Submenu,
+  Group,
   useContextMenu,
   ItemParams,
   RightSlot,
@@ -294,8 +295,12 @@ export function App() {
         <Item
           data-test={DATA_TEST.MENU_SECOND_ITEM}
           hidden={() => state.hideItems}
+          closeOnClick={false}
+          onClick={() => {
+            console.log("click item no close");
+          }}
         >
-          Item 2
+          Item no close
         </Item>
         <Item
           onClick={() => {
@@ -320,6 +325,7 @@ export function App() {
         </Item>
         <Separator />
         <Item>Item 4</Item>
+
         <Submenu label="Submenu" data-test={DATA_TEST.SUBMENU}>
           <Item data-test={DATA_TEST.SUBMENU_FIRST_ITEM}>Submenu Item 1</Item>
           <Item>Submenu Item 2</Item>
@@ -344,12 +350,19 @@ export function App() {
           </Submenu>
         </Submenu>
         <Separator />
-        <Item data-test={DATA_TEST.MENU_LAST_ITEM}>Item 5</Item>
+        <Group columns={2}>
+          <Item>group 1</Item>
+          <Item>group 2</Item>
+          <Item>group 3</Item>
+          <Item>group 4</Item>
+          <Item>group 5</Item>
+        </Group>
+        <Item>Item 44</Item>
       </Menu>
       <div data-test={DATA_TEST.MOUNT_NODE} />
 
       <section>
-        <input onInput={handleInput} onKeyDown={handleKeyDown}></input>
+        {/* <input onInput={handleInput} onKeyDown={handleKeyDown}></input> */}
       </section>
     </main>
   );

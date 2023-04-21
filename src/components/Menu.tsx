@@ -12,7 +12,7 @@ import { ItemTrackerProvider } from "./ItemTrackerProvider";
 import { eventManager } from "../core/eventManager";
 import { TriggerEvent, MenuId, MenuAnimation, Theme, Control } from "../types";
 import { useItemTracker } from "../hooks";
-import { createKeyboardController } from "./keyboardController";
+import { createController } from "./controller";
 import { CssClass, EVENT, hideOnEvents } from "../constants";
 import { cloneItems, getMousePosition, isFn, isStr } from "./utils";
 import { flushSync } from "react-dom";
@@ -114,9 +114,7 @@ export const Menu: React.FC<MenuProps> = ({
   });
   const nodeRef = useRef<HTMLDivElement>(null);
   const itemTracker = useItemTracker();
-  const [menuController] = useState(() =>
-    createKeyboardController(virtualFocus)
-  );
+  const [menuController] = useState(() => createController(virtualFocus));
   const wasVisible = useRef<boolean>();
   const visibilityId = useRef<number>();
 
@@ -168,7 +166,8 @@ export const Menu: React.FC<MenuProps> = ({
       switch (e.key) {
         case "Enter":
         case " ":
-          if (!menuController.openSubmenu()) hide();
+          // if (!menuController.openSubmenu()) hide();
+          menuController.click();
           break;
         case "Escape":
           hide();
@@ -183,11 +182,11 @@ export const Menu: React.FC<MenuProps> = ({
           break;
         case "ArrowRight":
           preventDefault(e);
-          menuController.openSubmenu();
+          menuController.moveRight();
           break;
         case "ArrowLeft":
           preventDefault(e);
-          menuController.closeSubmenu();
+          menuController.moveLeft();
           break;
         default:
           menuController.matchKeys(e);

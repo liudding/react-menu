@@ -1,8 +1,10 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 
 export interface ItemTrackerRecord {
   node: HTMLElement;
   isSubmenu: boolean;
+  isGroup: boolean;
+  groupColumns?: number;
   submenuRefTracker?: ItemTracker;
   setSubmenuPosition?: () => void;
   keyMatcher?: false | ((e: KeyboardEvent) => void);

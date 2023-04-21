@@ -5,6 +5,7 @@ export const enum CssClass {
   menu = "contexify",
   submenu = "contexify_submenu",
   submenuOpen = "contexify_submenu-isOpen",
+  group = "contexify_group",
   rightSlot = "contexify_rightSlot",
   separator = "contexify_separator",
   item = "contexify_item",

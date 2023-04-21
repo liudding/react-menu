@@ -160,7 +160,7 @@ export const Item: React.FC<ItemProps> = ({
   // provide a feedback to the user that the item has been clicked before closing the menu
   function dispatchUserHanlder() {
     const node = itemNode.current!;
-    node.focus();
+    // node.focus();
     node.addEventListener(
       "animationend",
       // defer, required for react 17
@@ -177,6 +177,7 @@ export const Item: React.FC<ItemProps> = ({
       itemTracker.set(node, {
         node,
         isSubmenu: false,
+        isGroup: false,
         keyMatcher:
           !isDisabled &&
           isFn(keyMatcher) &&
@@ -201,8 +202,8 @@ export const Item: React.FC<ItemProps> = ({
   }
 
   function handleMouseEnter() {
-    controller.focusItem(itemNode.current);
-    console.log("=====");
+    console.log("mouse enter item");
+    controller.focusNode(itemNode.current);
   }
 
   function handleMouseLeave() {

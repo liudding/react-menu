@@ -13,13 +13,13 @@ import { Arrow } from "./Arrow";
 import { RightSlot } from "./RightSlot";
 import { useControllerContext } from "../hooks/useControllerContext";
 
-export interface SubMenuProps
+export interface MenuGroupProps
   extends InternalProps,
     Omit<React.HTMLAttributes<HTMLElement>, "hidden"> {
   /**
    * Any valid node that can be rendered
    */
-  label: ReactNode;
+  // label: ReactNode;
 
   /**
    * Any valid node that can be rendered
@@ -27,9 +27,14 @@ export interface SubMenuProps
   children: ReactNode;
 
   /**
+   * The number of columns
+   */
+  columns: number;
+
+  /**
    * Render a custom arrow
    */
-  arrow?: ReactNode;
+  // arrow?: ReactNode;
 
   /**
    * Disable the `Submenu`. If a function is used, a boolean must be returned
@@ -42,12 +47,11 @@ export interface SubMenuProps
   hidden?: BooleanPredicate;
 }
 
-export const Submenu: React.FC<SubMenuProps> = ({
-  arrow,
+export const Group: React.FC<MenuGroupProps> = ({
   children,
   disabled = false,
   hidden = false,
-  label,
+  columns,
   className,
   triggerEvent,
   propsFromTrigger,
@@ -84,6 +88,7 @@ export const Submenu: React.FC<SubMenuProps> = ({
   }
 
   function handleMouseEnter() {
+    console.log("mouse enter group");
     controller.focusNode(itemNode.current);
   }
 
@@ -92,8 +97,9 @@ export const Submenu: React.FC<SubMenuProps> = ({
       itemNode.current = node;
       parentItemTracker.set(node, {
         node,
-        isSubmenu: true,
-        isGroup: false,
+        isSubmenu: false,
+        isGroup: true,
+        groupColumns: columns,
         submenuRefTracker: itemTracker,
         setSubmenuPosition: setPosition,
       });
@@ -116,18 +122,16 @@ export const Submenu: React.FC<SubMenuProps> = ({
         role="menuitem"
         aria-haspopup
         aria-disabled={isDisabled}
-        onMouseEnter={setPosition}
-        onTouchStart={setPosition}
+        onMouseEnter={handleMouseEnter}
       >
-        <div
-          className={CssClass.itemContent}
-          onClick={(e) => e.stopPropagation()}
-          onMouseEnter={handleMouseEnter}
-        >
-          {label}
-          <RightSlot>{arrow || <Arrow />}</RightSlot>
+        <div className={CssClass.group} onClick={(e) => e.stopPropagation()}>
+          {cloneItems(children, {
+            propsFromTrigger,
+            // @ts-ignore: injected by the parent
+            triggerEvent,
+          })}
         </div>
-        <div
+        {/* <div
           className={`${CssClass.menu} ${CssClass.submenu}`}
           ref={submenuNode}
           style={style}
@@ -137,7 +141,7 @@ export const Submenu: React.FC<SubMenuProps> = ({
             // @ts-ignore: injected by the parent
             triggerEvent,
           })}
-        </div>
+        </div> */}
       </div>
     </ItemTrackerProvider>
   );
