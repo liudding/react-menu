@@ -263,29 +263,24 @@ export const Menu: React.FC<MenuProps> = ({
   function control({ control }: { control: Control }) {
     switch (control) {
       case "enter":
-        if (!menuController.openSubmenu()) hide();
+        menuController.click();
         break;
       case "hide":
         hide();
         break;
       case "up":
-        // preventDefault(e);
         menuController.moveUp();
         break;
       case "down":
-        // preventDefault(e);
         menuController.moveDown();
         break;
       case "right":
-        // preventDefault(e);
-        menuController.openSubmenu();
+        menuController.moveRight();
         break;
       case "left":
-        // preventDefault(e);
-        menuController.closeSubmenu();
+        menuController.moveLeft();
         break;
       default:
-        // menuController.matchKeys(e);
         break;
     }
   }

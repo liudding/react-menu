@@ -243,30 +243,6 @@ export function createController(virtalFocus: boolean = false) {
     }
 
     return moveTo(focusedIndex - 1, { direction: "up", focus: "last" });
-
-    // const prev = currentItems[focusedIndex - 1];
-    // console.log(currentItems, focusedPath, focusedIndex, prev);
-
-    // // 移动到了边缘
-    // if (!prev) {
-    //   const parent = focusedPath[focusedPath.length - 2];
-    //   if (parent && parent.isGroup) {
-    //     // 跳出 group
-    //     const grouPath = focusedPath.slice(0, -1);
-
-    //     removeFocusedState(focusedPath[focusedPath.length - 1].node);
-    //     moveOutGroup(grouPath);
-    //     movePrev();
-    //     return;
-    //   }
-    //   return false;
-    // }
-    // const prevPath = focusedPath.slice(0, -1);
-    // prevPath.push(prev);
-
-    // focusedIndex--;
-
-    // focusItem(prevPath, { focus: "last" });
   }
 
   function moveTo(
@@ -314,6 +290,9 @@ export function createController(virtalFocus: boolean = false) {
   function openSubmenu(path: Path, focusFirst: boolean = true) {
     if (!isFocused()) return false;
 
+    // 当前如果为 false，有 bug
+    focusFirst = true;
+
     const item = path[path.length - 1];
     if (!item.isSubmenu) return false;
 
@@ -341,6 +320,7 @@ export function createController(virtalFocus: boolean = false) {
 
     currentItems = getSiblings(path);
     focusedIndex = getItemIndex(item, currentItems);
+    focusedPath = path;
   }
 
   function moveToGroup(path: Path, focus: FocusType = "first") {

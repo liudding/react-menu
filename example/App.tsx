@@ -358,6 +358,28 @@ export function App() {
           <Item>group 5</Item>
         </Group>
         <Item>Item 44</Item>
+        <Group
+          columns={1}
+          style={{ height: 50, overflow: "auto", background: "red" }}
+        >
+          <Item>group 1</Item>
+          <Item>group 2</Item>
+          <Item>group 3</Item>
+          <Item>group 4</Item>
+          <Item>group 5</Item>
+
+          <Item>group 1</Item>
+          <Item>group 2</Item>
+          <Item>group 3</Item>
+          <Item>group 4</Item>
+          <Item>group 5</Item>
+
+          <Item>group 1</Item>
+          <Item>group 2</Item>
+          <Item>group 3</Item>
+          <Item>group 4</Item>
+          <Item>group 5</Item>
+        </Group>
       </Menu>
       <div data-test={DATA_TEST.MOUNT_NODE} />
 
